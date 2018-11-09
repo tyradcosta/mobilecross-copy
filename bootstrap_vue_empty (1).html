@@ -1,0 +1,290 @@
+
+         
+         <!--https://bootstrap-vue.js.org/docs/reference/starter-templates/
+
+Nice Example:
+https://github.com/rdegges/cryptocompare
+https://developer.okta.com/blog/2017/09/06/build-a-cryptocurrency-comparison-site-with-vuejs
+
+-->
+
+   <!DOCTYPE html>
+   <html lang="en">
+     <head>
+
+       <!-- Required meta tags -->
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+       <title>My Banking App</title>
+
+       <!-- Required Stylesheets -->
+       <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+       <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+       <!-- Required scripts -->
+       <script src="https://unpkg.com/vue"></script>
+
+       <!--Vue.js link-->
+       <script type = "text/javascript" src = "js/vue.js"></script>
+
+       <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+       <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+     </head>
+
+     <body>
+         
+         
+
+
+       <!-- Our application root element which contains all bootstrap-Vue elements -->
+       <div id="app" style="background-color: #C0C5C1">
+
+           
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-static-top" style="background-color: #BBBE64;">
+    <div class="container">
+        
+  <a class="navbar-brand" href="#" style= "color:#EAF0CE" >Ecologix Budget Tracker</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item ">
+        <a class="nav-link" href="#">My Account <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+     <button type="button" class="btn btn-secondary" style=" background-color: #7D8491" type="submit"style = "color: #443850" >Search</button>
+    </form>
+  </div>
+</nav>
+       
+<div class="jumbotron jumbotron-fluid" style=" background-color:#EAF0CE;">
+  <div class="container">
+    <h1 class="display-4" style="color: color: #443850,">Hello Tyra,</h1>
+    <p class="lead" style="color: color: #443850,"> Ecologix has an easy setup and elegant design and makes keeping tabs on your financial accounts and investments smooth and straightforward. Visualize your spending behaviours with charts and get alerts to help you better plan for your future goals. </p>
+  </div>
+
+</div>
+           
+           
+           
+<!--
+          <h3>
+  Goal Tracker
+  <small class="text-muted"> 25% Complete</small>
+</h3>
+           
+ <div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: 25%" style = "color: #BBBE64" aria-valuenow="0" aria-valuemin="25" aria-valuemax="100"></div>
+</div>
+-->
+           
+           
+
+
+         <b-modal v-model="modalShow">
+           New Expense Entry!<br>
+       You spend {{text2}} on {{text1}}.
+         </b-modal>
+ <b-modal v-model="modalShow1">
+           New Income Entry!<br>
+           You got  {{text4}} from {{text3}}.
+         </b-modal>
+           
+           
+
+           
+           
+           
+           <b-modal v-model="modalShow2" style = "yellow">
+      Slow down Spending Too Much<br>
+               {{totalIncome - totalExpense}}
+         </b-modal>
+        
+                      <b-modal v-model="modalShow3"style ="red">
+          WARNING YOU ARE IN DEPT<br>
+               {{totalIncome - totalExpense}}
+         </b-modal>
+
+           
+ 
+       
+         
+
+         <!-- Tabs with card integration -->
+          <b-card no-body>
+
+              <b-tabs small card v-model="tabIndex">
+                    <b-tabs small card v-model="tabIndex1">
+                  
+                        <b-tab title="Income Entry"> 
+
+                    Enter a Source of Income: <b-form-input v-model="text3"
+                                  type="text"
+                                  placeholder="Income Description"></b-form-input>
+
+                  $ Amount: <b-form-input v-model="text4"
+                                  type="text"
+                                  placeholder="Amount"></b-form-input>
+
+                    <b-button class="mt-2 mb-2" :size="size" :variant="variant" @click="buttonEvent2"  style="background-color:#443850">
+                         Add $$$!
+                    </b-button>
+
+                  </b-tab>
+                  
+
+                  <b-tab title="Expense Entry"> 
+
+                    Enter an expense: <b-form-input v-model="text1"
+                                  type="text"
+                                  placeholder="Expense Description"></b-form-input>
+
+                    Expense $ cost: <b-form-input v-model="text2"
+                                  type="text"
+                                  placeholder=" Cost"></b-form-input>
+
+                    <b-button class="mt-2 mb-2" :size="size" :variant="variant" @click="buttonEvent"  style="background-color:#443850">
+                         Add New Expense!
+                    </b-button>
+
+                  </b-tab>
+                  
+        
+
+                  <b-tab title="Expense Ledger">
+             Budget:
+                      <b-table striped hover :items="items"></b-table>
+                       <b-table striped hover :items="sources"></b-table>
+                      
+                       
+                  </b-tab>
+                    
+                  </b-tab>
+
+                  
+ 
+
+
+              </b-tabs>
+          </b-card>
+
+          <b-card class="text-center">
+              <h4> <small class="text-muted"> You are currently spending {{totalExpense}} dollars! </small></h4>
+          </b-card>
+            <b-card class="text-center">
+              <h4><small class="text-muted">You are currently have {{totalIncome-totalExpense}} dollars!</small></h4>
+          </b-card>
+
+
+          <!-- Control buttons-->
+      
+           
+           
+           <div class="text-center" >
+              <b-button-group class="mt-2 mb-2">
+                <b-btn style="#7D8491" @click="tabIndex1--">Previous</b-btn>
+                <b-btn style="#7D8491" @click="tabIndex1++">Next</b-btn>
+              </b-button-group>
+              <br>
+          </div>
+
+
+       </div>
+
+
+
+       <!-- Start running your app -->
+       <script>
+
+         window.app = new Vue({
+           el: "#app",
+           data: {
+             //Variables go here. key : value pairs. Comma separated
+             tabIndex : 0,
+             text1 : "",
+             text2 : "",
+             size : "",
+             variant : "",
+             modalShow : false,
+             items : [],
+             totalExpense : 0,
+             tabIndex1 : 0,
+             text3 : "",
+             text4 : "",
+             size1 : "",
+             variant1 : "",
+             modalShow1 : false,
+             sources : [],
+             totalIncome : 0,
+             modalShow2 : false,
+               modalShow3 : false
+
+           },
+           methods: {
+
+             //Methods go here. Comma separated
+               
+
+//           
+               
+               buttonEvent2(){this.modalShow1 = !this.modalShow1;
+               var numItems3 = this.sources.length;
+               this.sources.push({Income : this.text3, Amount : this.text4});
+               this.tabIndex1++;
+               this.totalIncome += Number(this.text4);
+                              
+                                var total = this.totalIncome - this.totalExpense  
+                   
+                   if(total <= -1 && total >-100){ this.modalShow2 = !this.modalShow2;}
+                               else if(total <= -100 ){ this.modalShow3 = !this.modalShow3;}
+                              
+                             },
+               
+               
+               
+             buttonEvent(){
+
+               this.modalShow = !this.modalShow;
+               var numItems = this.items.length;
+               this.items.push({Expense : this.text1, Cost : this.text2});
+               this.tabIndex++;
+               this.totalExpense += Number(this.text2); 
+                 
+                   var total = this.totalIncome - this.totalExpense  
+                   
+                   
+                   
+                   if(total <= -100 ){ this.modalShow3 = !this.modalShow3;}
+                  
+         else if(total <= -1 && total >-100){ this.modalShow2 = !this.modalShow2;}
+                 
+            
+             },
+               
+                  
+                         
+                
+            
+                
+               
+               
+
+           }
+
+         })
+
+       </script>
+
+
+     </body>
+   </html>

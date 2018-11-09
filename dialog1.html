@@ -1,0 +1,144 @@
+<!--https://bootstrap-vue.js.org/docs/reference/starter-templates/
+
+Nice Example:
+https://github.com/rdegges/cryptocompare
+https://developer.okta.com/blog/2017/09/06/build-a-cryptocurrency-comparison-site-with-vuejs
+
+-->
+
+   <!DOCTYPE html>
+   <html lang="en">
+     <head>
+
+       <!-- Required meta tags -->
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+       <title>Assignment 2 - Bootstrap-Vue</title>
+
+       <!-- Required Stylesheets -->
+       <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+       <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+       <!-- Required scripts -->
+       <!--script src="https://unpkg.com/vue"></script-->
+
+       <!--Vue.js link-->
+       <script type = "text/javascript" src = "js/vue.js"></script>
+
+       <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+       <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+     </head>
+
+     <body>
+
+       <!-- Our application root element which contains all bootstrap-Vue elements -->
+       <div id="app" style="background-color:green">
+
+         <h2>Simple Expense Tracker<b-badge>V-0.01</b-badge></h2>
+
+         <b-modal v-model="modalShow">
+           New Entry!<br>
+           You have entered {{text1}} and {{text2}}.
+         </b-modal>
+
+         <!-- Tabs with card integration -->
+          <b-card no-body>
+
+              <b-tabs small card v-model="tabIndex">
+
+                  <b-tab title="Expense Entry">
+
+                    Enter an expense: <b-form-input v-model="text1"
+                                  type="text"
+                                  placeholder="Input 1 goes here"></b-form-input>
+
+                    Enter a cost: <b-form-input v-model="text2"
+                                  type="text"
+                                  placeholder="Input 2 goes here"></b-form-input>
+
+                    <b-button :size="size" :variant="variant" @click="buttonEvent" style="background-color:red">
+                         Add New Expense!
+                    </b-button>
+
+                  </b-tab>
+
+
+                  <b-tab title="Expense Ledger">
+                      You have entered:
+                      <b-table striped hover :items="items"></b-table>
+                  </b-tab>
+
+                  <b-tab title="Expense List">
+                    Here is the same info in a list:
+
+                    <ol>
+                      <li v-for="item in items">{{ item }}</li>
+                    </ol>
+
+                  </b-tab>
+
+              </b-tabs>
+          </b-card>
+
+          <b-card class="text-center">
+              <h1>You are currently spending {{totalExpense}} dollars!</h1>
+          </b-card>
+
+
+          <!-- Control buttons-->
+          <div class="text-center">
+              <b-button-group class="mt-2">
+                <b-btn @click="tabIndex--">Previous</b-btn>
+                <b-btn @click="tabIndex++">Next</b-btn>
+              </b-button-group>
+              <br>
+              <span class="text-muted">Current Tab: {{tabIndex}}</span>
+          </div>
+
+       </div>
+
+
+
+       <!-- Start running your app -->
+       <script>
+
+         window.app = new Vue({
+           el: "#app",
+           data: {
+             //Variables go here. key : value pairs. Comma separated
+             tabIndex : 0,
+             text1 : "",
+             text2 : "",
+             size : "",
+             variant : "",
+             modalShow : false,
+             items : [],
+             totalExpense : 0
+
+           },
+           methods: {
+
+             //Methods go here. Comma separated
+             buttonEvent(){
+
+               this.modalShow = !this.modalShow;
+
+               var numItems = this.items.length;
+               this.items.push({input1 : this.text1, input2 : this.text2});
+               this.tabIndex++;
+               this.totalExpense += Number(this.text2);
+
+
+             }
+
+           }
+
+         })
+
+       </script>
+
+
+     </body>
+   </html>
